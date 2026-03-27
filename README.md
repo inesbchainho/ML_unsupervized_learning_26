@@ -1,32 +1,29 @@
 # machine_learning_feb2026
 Project for Machine Learning II course
 
-Dataset: Telco Customer Churn
+Dataset: Credit Card Dataset for Clustering
 
-Problem: Unsupervized Learning (model1, model2)
+Problem: Unsupervized Learning (k-means, model2)
 
 Model Ideas: Clustering (k-Means and Hierarchical), DBS, Mean-Shift, SOM, 
 
 Variables:
- x   Column            Orig_Dtype  New_Dtype  Variable Type
- 0   customerID        object      string     categorical(nominal) - primary identifier(unique)
- 1   gender            object      string     categorical(nominal) - binary
- 2   SeniorCitizen     int64       integer    quantitative(discrete)
- 3   Partner           object      string     categorical(nominal) - binary
- 4   Dependents        object      string     categorical(nominal) - binary
- 5   tenure            int64       integer    quantitative(discrete)
- 6   PhoneService      object      string     categorical(nominal) - binary
- 7   MultipleLines     object      string     categorical(nominal) - 3 values
- 8   InternetService   object      string     categorical(nominal) - 3 values
- 9   OnlineSecurity    object      string     categorical(nominal) - 3 values
- 10  OnlineBackup      object      string     categorical(nominal) - 3 values
- 11  DeviceProtection  object      string     categorical(nominal) - 3 values
- 12  TechSupport       object      string     categorical(nominal) - 3 values
- 13  StreamingTV       object      string     categorical(nominal) - 3 values
- 14  StreamingMovies   object      string     categorical(nominal) - 3 values
- 15  Contract          object      string     categorical(nominal) - 3 values
- 16  PaperlessBilling  object      string     categorical(nominal) - binary
- 17  PaymentMethod     object      string     categorical(nominal) - 4 values
- 18  MonthlyCharges    float64     float      quantitative(continuous)
- 19  TotalCharges      object      float      quantitative(continuous)
- 20  Churn             object      string     categorical(nominal) - binary
+x   Column                            Orig_Dtype New_Dtype Variable Type
+0   CUST_ID                           object     string    categorical(nominal) - primary identifier(unique)
+1   BALANCE                           float64    float     quantitative(continuous)
+2   BALANCE_FREQUENCY                 float64    float     quantitative(continuous)
+3   PURCHASES                         float64    float     quantitative(continuous)
+4   ONEOFF_PURCHASES                  float64    float     quantitative(continuous)
+5   INSTALLMENTS_PURCHASES            float64    float     quantitative(continuous)
+6   CASH_ADVANCE                      float64    float     quantitative(continuous)
+7   PURCHASES_FREQUENCY               float64    float     quantitative(continuous)
+8   ONEOFF_PURCHASES_FREQUENCY        float64    float     quantitative(continuous)
+9   PURCHASES_INSTALLMENTS_FREQUENCY  float64    float     quantitative(continuous)
+10  CASH_ADVANCE_FREQUENCY            float64    float     quantitative(continuous)
+11  CASH_ADVANCE_TRX                  int64      integer   quantitative(discrete)
+12  PURCHASES_TRX                     int64      integer   quantitative(discrete)
+13  CREDIT_LIMIT                      float64    float     quantitative(continuous)
+14  PAYMENTS                          float64    float     quantitative(continuous)
+15  MINIMUM_PAYMENTS                  float64    float     quantitative(continuous)
+16  PRC_FULL_PAYMENT                  float64    float     quantitative(continuous)
+17  TENURE                            int64      integer   quantitative(discrete)
