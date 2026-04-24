@@ -8,6 +8,7 @@ from sklearn.preprocessing import RobustScaler
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from sklearn.metrics import silhouette_score
 
 # Page configuration
 st.set_page_config(
@@ -57,8 +58,10 @@ if uploaded_file is not None:
     # Handle missing values
     if df.isnull().sum().sum() > 0:
         st.sidebar.warning(f"⚠️ Found {df.isnull().sum().sum()} missing values")
-        fill_method = st.sidebar.radio("How to handle missing values?", 
-                                       ["Drop rows", "Fill with median", "Fill with mean"])
+        fill_method = st.sidebar.radio("How to handle missing values?",
+                                       ["Drop rows", "Fill with median", "Fill with mean"],
+                                       index=1
+        )
         if fill_method == "Drop rows":
             df = df.dropna()
         elif fill_method == "Fill with median":
@@ -74,7 +77,7 @@ if uploaded_file is not None:
     selected_features = st.sidebar.multiselect(
         "Select features for clustering",
         numeric_cols,
-        default=numeric_cols[:5] if len(numeric_cols) > 5 else numeric_cols
+        default=numeric_cols
     )
     
     if len(selected_features) < 2:
@@ -105,9 +108,19 @@ if uploaded_file is not None:
         # Perform K-Means clustering
         kmeans = KMeans(n_clusters=n_clusters, random_state=random_state, n_init=10)
         clusters = kmeans.fit_predict(X_scaled)
+        sil_score = silhouette_score(X_scaled, clusters)
         
         # Add cluster labels to dataframe
         df['Cluster'] = clusters
+        if n_clusters == 3:
+            cluster_names = {
+                0: "Low to Moderate Activity Customers",
+                1: "High Value Active Purchasers",
+                2: "High Balance / Potential Risk Customers"
+            }
+            df["Cluster_Name"] = df["Cluster"].map(cluster_names)
+        else:
+            df["Cluster_Name"] = df["Cluster"].apply(lambda x: f"Cluster {x}")
         
         # Create tabs for different visualizations
         tab1, tab2, tab3, tab4 = st.tabs(
@@ -118,7 +131,7 @@ if uploaded_file is not None:
         with tab1:
             st.markdown('<div class="sub-header">Dataset Information</div>', unsafe_allow_html=True)
             
-            col1, col2, col3, col4 = st.columns(4)
+            col1, col2, col3, col4, col5 = st.columns(5)
             with col1:
                 st.metric("Total Records", len(df))
             with col2:
@@ -127,6 +140,9 @@ if uploaded_file is not None:
                 st.metric("Number of Clusters", n_clusters)
             with col4:
                 st.metric("Inertia (WCSS)", round(kmeans.inertia_, 2))
+            with col5:
+                st.metric("Silhouette Score", round(sil_score, 3))
+    
             
             st.markdown("### Raw Data Preview")
             st.dataframe(df.head(10), use_container_width=True)
@@ -260,6 +276,26 @@ if uploaded_file is not None:
             )
             
             cluster_data = df[df['Cluster'] == selected_cluster]
+
+            st.markdown("### Cluster Interpretation")
+
+            if selected_cluster == 0 and n_clusters == 3:
+                st.info("""
+                This cluster represents low to moderate activity customers. 
+                These customers have relatively low or moderate balances, purchases, credit limits and payments.
+                """)
+            elif selected_cluster == 1 and n_clusters == 3:
+                st.success("""
+                This cluster represents high value active purchasers. 
+                These customers have the highest purchase amounts, high purchase frequency, many transactions and high payments.
+                """)
+            elif selected_cluster == 2 and n_clusters == 3:
+                st.warning("""
+                This cluster represents high balance and potential risk customers. 
+                These customers have high balances, very high minimum payments and a very low full payment rate, which may suggest a potential risk profile.
+                """)
+            else:
+                st.info("This cluster can be interpreted by comparing its average feature values with the other clusters.")
             
             col1, col2, col3 = st.columns(3)
             with col1:
