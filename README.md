@@ -9,7 +9,7 @@ Model Ideas: Clustering (k-Means and Hierarchical), DBS, Mean-Shift, SOM,
 
 Variables:
 x   Column                            Orig_Dtype New_Dtype Variable Type
-0   CUST_ID                           object     uint16    categorical(nominal) - primary identifier(unique)
+0   CUST_ID                           object     uint16    categorical(nominal) - prim. ident.(unique)
 1   BALANCE                           float64    float64   quantitative(continuous)
 2   BALANCE_FREQUENCY                 float64    float32   quantitative(continuous)
 3   PURCHASES                         float64    float32   quantitative(continuous)
