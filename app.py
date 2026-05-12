@@ -20,7 +20,7 @@ st.set_page_config(
 
 # Color scheme from Main_Notebook
 COLOR_PRIMARY = '#3ecae3'
-COLOR_PALETTE = ['#e2fbff', '#b6f4ff', '#6ae8ff', '#3ecae3', '#1ab5d1', '#0097b2', '#007b91']
+COLOR_PALETTE = ['#3ecae3', '#7e57c2', '#fb8c00', '#43a047', '#e53935']
 
 # Custom CSS
 st.markdown("""
